@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+
+
+    <form id="myForm">
+
+    <p>New User Name</p>
+    <input type="text" placeholder="Enter New User ID" id="NewUserID" required>
+
+    <p>First Name</p>
+    <input type="text"placeholder="Enter Here" id="UserFirstName" required>
+
+    <p>Last Name</p>
+    <input type="text"placeholder="Enter Here" id="UserLastName" required>
+
+    <p>New Email</p>
+    <input type="email"placeholder="Enter Email" id="UserEmail" required>
+
+    <p>Create New Password</p>
+    <input type="password" id="UserPassword" placeholder="Enter New Password">
+    <input type="checkbox" id="showPassword"> Show Password
+
+    <p>Re-Enter Password</p>
+    <input type="password" id="rePassword" placeholder="Re-Enter" name="rePassword"><br>
+    <p id="passwordMatchMessage" style="color: red;"></p>
+    <p></p>
+
+    <p>Enter Mobile Number</p>
+    <input type="number"placeholder="Ex 9030317589" id="NewMobileNumber" required>
+
+    <p></p>
+
+    <input type="submit">
+    </form>
+    <script>
+        function back()
+        {
+            window.location.href = "./harshit.html";
+        }
+        const passwordInput = document.getElementById('UserPassword');
+        const showPasswordCheckbox = document.getElementById('showPassword');
+
+        // Add a change event listener to the checkbox
+        showPasswordCheckbox.addEventListener('change', function() {
+            // If the checkbox is checked, show the password
+            if (showPasswordCheckbox.checked) {
+                passwordInput.type = 'text';
+            } else {
+                // Otherwise, hide the password
+                passwordInput.type = 'password';
+            }
+        });
+        const rePasswordInput = document.getElementById('rePassword');
+        const passwordMatchMessage = document.getElementById('passwordMatchMessage');
+
+        // Add an input event listener to the re-enter password field
+        rePasswordInput.addEventListener('input', function() {
+            // Check if the passwords match
+            if (passwordInput.value === rePasswordInput.value) {
+                passwordMatchMessage.textContent = 'Passwords match!';
+                passwordMatchMessage.style.color = 'green';
+            } else {
+                passwordMatchMessage.textContent = 'Passwords do not match.';
+                passwordMatchMessage.style.color = 'red';
+            }
+        });
+
+        document.getElementById('myForm').addEventListener('submit', function(event) {
+            event.preventDefault();
+        const formData={
+            UserID: document.getElementById("NewUserID").value,
+            UserPassword: document.getElementById("UserPassword").value,
+            UserFirstName:document.getElementById("UserFirstName").value,
+            UserLastName:document.getElementById("UserLastName").value,
+            UserEmail:document.getElementById("UserEmail").value,
+            UserMobileNumber:document.getElementById("NewMobileNumber").value
+        }
+        if (!/^[a-zA-Z0-9]+$/.test(formData.UserID) || formData.UserID.length < 4 || formData.UserID.length > 20) {
+        alert('Invalid username');
+        // Prevent form submission
+      }
+      else{
+        senddetails();
+      }
+      function senddetails(){
+            fetch('http://localhost:3000/NewUser', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(formData)
+            })
+            .then(response => response.json())
+            .then(data => {
+                console.log(data); // Response from the server
+                    alert(data.message)
+                    if(data.message=='sucess')
+                    {
+                    window.location.href='./harshit.html';
+                    }
+
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                alert(error)
+            })
+        }
+        })
+    
+    
+    </script>
+</body>
+</html>

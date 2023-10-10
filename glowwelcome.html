@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <style>
+        body {
+    font-family: Arial, sans-serif;
+    background-color: #333;
+    text-align: center;
+    color: white;
+    padding: 100px;
+    margin: 0;
+}
+h1 {
+    font-size: 100px;
+}
+.glow {
+    animation: glowing 1.5s infinite alternate;
+}
+
+@keyframes glowing{
+ 0%, 100%{
+
+color: #fff;
+
+filter: blur (2px);
+
+text-shadow: 0 0 10px #ff9d00,
+
+0 0 20px #ff9d00,
+
+0 0 400px #ff9d00,
+
+0 0 80px #ff9d00,
+
+0 0 120px #ff9d00,
+
+0 0 200px #ff9d00,
+
+0 0 300px #ff9d00,
+
+0 0 400px #ff9d00;
+
+}
+
+5%,95%{
+
+color: #111;
+
+filter: blur (0px); 
+text-shadow: none;
+}}
+    </style>
+    <h1 class="glow">WELCOME</h1>
+</body>
+</html>

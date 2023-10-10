@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>harshit's page</title>
+</head>
+<body> 
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 80vh;
+            margin: 0;
+            background-image: url('code.png');
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+            background-size: 100% 100%;
+            
+        }
+    
+        .login-box {
+            width: 200px;
+            height: 180px;
+            background-color: rgb(71, 74, 72, 0.2);
+            border-radius: 2%;
+            margin: 2px;
+            border: 500px;
+            padding: 50px;
+            backdrop-filter: blur(10px);
+        }
+        p {
+            margin: 0;
+            padding: 0 0  20PX;
+        }
+    
+        .login-box input {
+            width: 100%;
+            padding: 5px;
+            margin-bottom: 10px;
+            text-align: center; /* Center-align text within input fields */
+            padding: auto;
+        }
+    .login-box input[type="submit"] 
+    {
+        width: 107%;
+        border-radius: 20px;
+        padding-top: 5px;
+        margin-top: 5px;
+        background-color: #fb2525;
+    }
+    .login-box input[type="submit"]:hover 
+    {
+        background-color: #ffc107;
+        cursor: pointer;
+    }
+    </style>
+    <form id="myForm">
+<div class="login-box">
+<div>
+ <p>User Name</p>
+<input type="text" id=username placeholder="Enter User ID"></input>
+</div>
+<div> 
+<p>Password</p>
+<input type="Password" id= "pass" placeholder="Enter Password"></input>
+<input type ="submit" value="Login">
+<a href="./new_user.html">Create User</a>
+<a href=""></a>
+</div>  
+</div>
+    </form>
+<script>
+document.getElementById('myForm').addEventListener('submit', function(event) {
+            event.preventDefault();
+
+            const formData = {
+                username: document.getElementById('username').value,
+                password: document.getElementById('pass').value
+            };
+            if (!/^[a-zA-Z0-9]+$/.test(formData.username) || formData.username.length < 4 || formData.username.length > 20) {
+        alert('Invalid username');
+       // Prevent form submission
+      }
+      else{
+        senddata();
+      }
+      function senddata(){
+            fetch('http://localhost:3000/send', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(formData)
+            })
+            .then(response => response.json())
+            .then(data => {
+                console.log(data.user); // Response from the server
+                if (data.user=='welcome user'){
+                    alert("User verified Sucessfully")
+                    window.location.href='./glowwelcome.html';
+                }
+                else{
+                    console.log(data.error);
+                    alert(data.error);
+                }
+
+            })
+            .catch(error => {
+                console.error('Error:', error);
+            });
+        }
+        });
+    
+</script>
+</body>
+</html>
+

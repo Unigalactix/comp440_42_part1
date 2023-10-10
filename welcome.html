@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h4>Welcome!</h4>
+    <p>Try uploading a image!!! &darr;</p>
+    <input type="file" accept="image/*" id="backround-image">
+    <script>
+        const input=document.getElementById("backround-image");
+        input.addEventListener('change', function () {
+            const file = this.files[0];
+            if (file) {
+                const imageUrl = URL.createObjectURL(file);
+                const bodyElement = document.body;
+                // Set the background color dynamically
+                bodyElement.style.backgroundImage = `url('${imageUrl}')`;
+                bodyElement.style.backgroundRepeat = 'no-repeat';
+                bodyElement.style.backgroundAttachment = 'fixed';
+                bodyElement.style.backgroundSize = '100% 100%'; // Corrected background-size property
+            }
+        });
+    </script>
+
+</body>
+</html>
